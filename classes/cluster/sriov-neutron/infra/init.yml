@@ -15,7 +15,7 @@ parameters:
     # infra service addresses
     infra_config_hostname: cfg01
     infra_config_address: 10.109.1.196
-    infra_config_deploy_address: 10.0.9.196
+    infra_config_deploy_address: 10.109.9.196
     
     cluster_domain: sriov-neutron.local
     cluster_name: sriov-neutron

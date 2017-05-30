@@ -14,16 +14,16 @@ parameters:
 
     # infra service addresses
     infra_config_hostname: cfg01
-    infra_config_address: 10.0.1.196
+    infra_config_address: 10.109.1.196
     infra_config_deploy_address: 10.0.9.196
     
     cluster_domain: sriov-neutron.local
     cluster_name: sriov-neutron
     cluster_public_host: ${_param:openstack_proxy_address}
-    infra_kvm_address: 10.0.1.240
-    infra_kvm_node01_address: 10.0.1.2
-    infra_kvm_node02_address: 10.0.1.3
-    infra_kvm_node03_address: 10.0.1.4
+    infra_kvm_address: 10.109.1.240
+    infra_kvm_node01_address: 10.109.1.2
+    infra_kvm_node02_address: 10.109.1.3
+    infra_kvm_node03_address: 10.109.1.4
     infra_kvm_node01_deploy_address: 10.109.9.5
     infra_kvm_node02_deploy_address: 10.109.9.6
     infra_kvm_node03_deploy_address: 10.109.9.7

@@ -44,36 +44,18 @@ parameters:
           - service.galera.master.cluster
           params:
             mysql_cluster_role: master
-        openstack_telemetry_node01:
-          params:
-            linux_system_codename: xenial
-        openstack_telemetry_node02:
-          params:
-            linux_system_codename: xenial
-        openstack_telemetry_node03:
-          params:
-            linux_system_codename: xenial
-        openstack_message_queue_node01:
-          params:
-            linux_system_codename: xenial
-        openstack_message_queue_node02:
-          params:
-            linux_system_codename: xenial
-        openstack_message_queue_node03:
-          params:
-            linux_system_codename: xenial
-        openstack_proxy_node01:
-          params:
-            linux_system_codename: xenial
-        openstack_proxy_node02:
-          params:
-            linux_system_codename: xenial
-        openstack_control_node01:
+        openstack_control_node02:
           classes:
-          - cluster.${_param:cluster_name}.openstack.control_init
-        openstack_database_node01:
+          - service.galera.slave.cluster
+          params:
+            mysql_cluster_role: slave
+            linux_system_codename: xenial
+        openstack_control_node03:
           classes:
-          - cluster.${_param:cluster_name}.openstack.database_init
+          - service.galera.slave.cluster
+          params:
+            mysql_cluster_role: slave
+            linux_system_codename: xenial
         openstack_compute_rack01:
           name: ${_param:openstack_compute_rack01_hostname}<<count>>
           domain: ${_param:cluster_domain}

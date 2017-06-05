@@ -41,9 +41,9 @@ parameters:
         openstack_control_node01:
           classes:
           - cluster.${_param:cluster_name}.openstack.control_init
-        openstack_database_node01:
-          classes:
-          - cluster.${_param:cluster_name}.openstack.database_init
+          - service.galera.master.cluster
+          params:
+            mysql_cluster_role: master
         openstack_telemetry_node01:
           params:
             linux_system_codename: xenial

@@ -40,24 +40,28 @@ parameters:
     control_vlan: 201
     tenant_vlan: 202
 
-    dns_server01: 8.8.8.8
+    dns_server01: 172.18.80.136
     dns_server02: 8.8.4.4
     deploy_network_netmask: 255.255.255.0
-    deploy_network_gateway: 
+    deploy_network_gateway: 10.109.9.1
 
     linux_dhcp_interface:
       enabled: true
       type: eth
-      proto: dhcp
+      proto: dchp
+      gateway: ${_param:deploy_network_gateway}
+      name_servers:
+        - ${_param:dns_server01}
+        - ${_param:dns_server02}
+
     linux_single_interface:
       enabled: true
       type: eth
       proto: static
+      gateway: ${_param:control_network_gateway}
       address: ${_param:single_address}
       netmask: ${_param:control_network_netmask}
-      name_servers:
-        - ${_param:dns_server01}
-        - ${_param:dns_server02}
+
 
   salt:
     minion:

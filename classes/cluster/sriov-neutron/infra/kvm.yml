@@ -78,41 +78,19 @@ parameters:
       cluster:
         internal:
           node:
-            mdb01:
-              image: ${_param:salt_control_xenial_image}
-            mdb02:
-              image: ${_param:salt_control_xenial_image}
-            mdb03:
-              image: ${_param:salt_control_xenial_image}
             ctl01:
               image: ${_param:salt_control_xenial_image}
             ctl02:
               image: ${_param:salt_control_xenial_image}
             ctl03:
               image: ${_param:salt_control_xenial_image}
-            dbs01:
-              image: ${_param:salt_control_xenial_image}
-            dbs02:
-              image: ${_param:salt_control_xenial_image}
-            dbs03:
-              image: ${_param:salt_control_xenial_image}
-            msg01:
-              image: ${_param:salt_control_xenial_image}
-            msg02:
-              image: ${_param:salt_control_xenial_image}
-            msg03:
-              image: ${_param:salt_control_xenial_image}
-            prx01:
-              image: ${_param:salt_control_xenial_image}
-            prx02:
-              image: ${_param:salt_control_xenial_image}
   virt:
     nic:
       default:
         eth1:
-          bridge: br_mgm
+          bridge: br-mgmt
         eth0:
-          bridge: br_ctl
+          bridge: br-ctl
   linux:
     network:
       interface:
@@ -125,8 +103,8 @@ parameters:
           enabled: true
           type: eth
           proto: manual
-          name: ${_param:primary_first_nic}
-        br_mgmt:
+          name: ${_param:primary_nic}
+        br-mgmt:
           enabled: true
           proto: static
           type: bridge
@@ -139,27 +117,27 @@ parameters:
           use_interfaces:
           - ${_param:deploy_nic}
         eth0.201:
-          name: eth0.${_param:control_vlan}
+          name: ${_param:deploy_nic}.${_param:control_vlan}
           enabled: true
           proto: manual
           type: vlan
           use_interfaces:
           - ${_param:deploy_nic}
         eth0.202:
-          name: eth0.${_param:tenant_vlan}
+          name: ${_param:deploy_nic}.${_param:tenant_vlan}
           enabled: true
           proto: manual
           type: vlan
           use_interfaces:
-         - ${_param:deploy_nic}
-        br_ctl:
+          - ${_param:deploy_nic}
+        br-ctl:
           enabled: true
           type: bridge
           proto: static
           address: ${_param:single_address}
           netmask: ${_param:control_network_netmask}
           use_interfaces:
-          - eth0.${_param:control_vlan}
+          - ${_param:deploy_nic}.${_param:control_vlan}
   #   system:
   #     package:
   #       linux-image-4.8.0-39-generic:

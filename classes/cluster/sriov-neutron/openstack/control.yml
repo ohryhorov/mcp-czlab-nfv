@@ -26,7 +26,6 @@ classes:
 - system.galera.server.database.ceilometer
 - system.galera.server.database.cinder
 - system.galera.server.database.glance
-- system.galera.server.database.grafana
 - system.galera.server.database.heat
 - system.galera.server.database.keystone
 - system.galera.server.database.nova
@@ -54,9 +53,9 @@ parameters:
            enabled: true
            type: eth
            proto: dhcp
-           name: ${_param:deploy_nic}
            gateway: ${_param:deploy_network_gateway}
            netmask: ${_param:deploy_network_netmask}
            name_servers:
            - ${_param:dns_server01}
            - ${_param:dns_server02}
+         ens3: ${_param:linux_single_interface}

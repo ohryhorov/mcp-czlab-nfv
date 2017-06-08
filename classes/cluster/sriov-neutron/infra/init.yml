@@ -1,11 +1,8 @@
 
 classes:
 - system.linux.system.single
+- system.openssh.server.team.networking
 - system.openssh.server.team.lab
-- system.openssh.server.team.tcpcloud
-- system.openssh.server.team.mcp_qa
-- system.openssh.server.team.l1_support
-- system.openssh.server.team.l2_support
 - cluster.sriov-neutron.openstack
 parameters:
   _param:
@@ -31,6 +28,10 @@ parameters:
     infra_kvm_node02_hostname: kvm02
     infra_kvm_node03_hostname: kvm03
 
+    openstack_gateway_node01_hostname: gtw01
+    openstack_gateway_node01_address: 10.109.9.8
+
+
     glusterfs_node01_address: ${_param:infra_kvm_node01_address}
     glusterfs_node02_address: ${_param:infra_kvm_node02_address}
     glusterfs_node03_address: ${_param:infra_kvm_node03_address}
@@ -49,7 +50,6 @@ parameters:
       enabled: true
       type: eth
       proto: dchp
-      gateway: ${_param:deploy_network_gateway}
       name_servers:
         - ${_param:dns_server01}
         - ${_param:dns_server02}
@@ -58,7 +58,6 @@ parameters:
       enabled: true
       type: eth
       proto: static
-      gateway: ${_param:control_network_gateway}
       address: ${_param:single_address}
       netmask: ${_param:control_network_netmask}
 
@@ -96,6 +95,11 @@ parameters:
           names:
           - ${_param:infra_kvm_node03_hostname}
           - ${_param:infra_kvm_node03_hostname}.${_param:cluster_domain}
+        gtw01:
+          address: ${_param:openstack_gateway_node01_address}
+          names:
+          - ${_param:openstack_gateway_node01_hostname}
+          - ${_param:openstack_gateway_node01_hostname}.${_param:cluster_domain}
     system:
       name: ${_param:infra_config_hostname}
       domain: ${_param:cluster_domain}

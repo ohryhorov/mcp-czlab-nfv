@@ -14,9 +14,9 @@ classes:
 parameters:
   _param:
     cluster_vip_address: ${_param:infra_kvm_address}
-    cluster_node01_address: ${_param:infra_kvm_node01_address}
-    cluster_node02_address: ${_param:infra_kvm_node02_address}
-    cluster_node03_address: ${_param:infra_kvm_node03_address}
+    cluster_node01_address: ${_param:infra_kvm_node01_deploy_address}
+    cluster_node02_address: ${_param:infra_kvm_node02_deploy_address}
+    cluster_node03_address: ${_param:infra_kvm_node03_deploy_address}
     keepalived_vip_interface: br_ctl
     keepalived_vip_virtual_router_id: 69
     deploy_nic: enp9s0f0
@@ -118,18 +118,26 @@ parameters:
           - ${_param:deploy_nic}
         eth0.201:
           name: ${_param:deploy_nic}.${_param:control_vlan}
-          enabled: true
-          proto: manual
+          enabled: false
           type: vlan
-          use_interfaces:
-          - ${_param:deploy_nic}
         eth0.202:
           name: ${_param:deploy_nic}.${_param:tenant_vlan}
+          enabled: false
+          type: vlan
+        eth1.201:
+          name: ${_param:primary_nic}.${_param:control_vlan}
           enabled: true
           proto: manual
           type: vlan
           use_interfaces:
-          - ${_param:deploy_nic}
+          - ${_param:primary_nic}
+        eth1.202:
+          name: ${_param:primary_nic}.${_param:tenant_vlan}
+          enabled: true
+          proto: manual
+          type: vlan
+          use_interfaces:
+          - ${_param:primary_nic}
         br-ctl:
           enabled: true
           type: bridge
@@ -137,7 +145,7 @@ parameters:
           address: ${_param:single_address}
           netmask: ${_param:control_network_netmask}
           use_interfaces:
-          - ${_param:deploy_nic}.${_param:control_vlan}
+          - ${_param:primary_nic}.${_param:control_vlan}
   #   system:
   #     package:
   #       linux-image-4.8.0-39-generic:

@@ -58,6 +58,11 @@ parameters:
             mysql_cluster_role: slave
             linux_system_codename: xenial
         openstack_gateway_node01:
+          name: gtw01
+          domain: ${_param:cluster_domain}
+          salt_master_host: 10.109.9.196
+          single_address: 10.109.9.8
+          tenant_address: 10.0.2.6
           classes:
           - cluster.${_param:cluster_name}.openstack.gateway
           params:
@@ -65,9 +70,6 @@ parameters:
         openstack_compute_rack01:
           name: ${_param:openstack_compute_rack01_hostname}<<count>>
           domain: ${_param:cluster_domain}
-          salt_master_host: 10.109.9.196
-          single_address: 10.109.9.8
-          tenant_address: 10.0.2.6
           classes:
           - cluster.${_param:cluster_name}.openstack.compute.sriov
           repeat:

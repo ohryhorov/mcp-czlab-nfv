@@ -32,9 +32,9 @@ parameters:
     openstack_gateway_node01_address: 10.109.9.8
 
 
-    glusterfs_node01_address: ${_param:infra_kvm_node01_address}
-    glusterfs_node02_address: ${_param:infra_kvm_node02_address}
-    glusterfs_node03_address: ${_param:infra_kvm_node03_address}
+    glusterfs_node01_address: ${_param:infra_kvm_node01_deploy_address}
+    glusterfs_node02_address: ${_param:infra_kvm_node02_deploy_address}
+    glusterfs_node03_address: ${_param:infra_kvm_node03_deploy_address}
 
     control_network_netmask: 255.255.255.0
     tenant_network_netmask: 255.255.255.0

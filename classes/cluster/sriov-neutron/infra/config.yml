@@ -43,6 +43,7 @@ parameters:
           - cluster.${_param:cluster_name}.openstack.control_init
           - service.galera.master.cluster
           params:
+            linux_system_codename: xenial
             mysql_cluster_role: master
         openstack_control_node02:
           classes:

@@ -53,16 +53,23 @@ parameters:
         openstack_gateway_node01:
           name: gtw01
           domain: ${_param:cluster_domain}
-          salt_master_host: 10.109.9.196
-          single_address: 10.109.9.8
-          tenant_address: 10.0.2.6
           classes:
           - cluster.${_param:cluster_name}.openstack.gateway
           params:
+            salt_master_host: 10.109.9.196
+            single_address: 10.109.1.6
+            tenant_address: 10.0.2.6
+            deploy_address: 10.109.9.8
             linux_system_codename: xenial
         openstack_database_node01:
           classes:
           - cluster.${_param:cluster_name}.openstack.database_init
+          params:
+            linux_system_codename: xenial
+        openstack_database_node02:
+          params:
+            linux_system_codename: xenial
+        openstack_database_node03:
           params:
             linux_system_codename: xenial
         openstack_compute_rack01:

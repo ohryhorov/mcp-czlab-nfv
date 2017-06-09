@@ -60,7 +60,7 @@ parameters:
           - cluster.${_param:cluster_name}.openstack.gateway
           params:
             linux_system_codename: xenial
-	openstack_database_node01:
+        openstack_database_node01:
           classes:
           - cluster.${_param:cluster_name}.openstack.database_init
           params:

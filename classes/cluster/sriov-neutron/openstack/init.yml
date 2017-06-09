@@ -90,10 +90,10 @@ parameters:
     openstack_control_node01_address: 10.109.1.11
     openstack_control_node02_address: 10.109.1.12
     openstack_control_node03_address: 10.109.1.13
-    openstack_database_address: 10.109.1.10
-    openstack_database_node01_address: 10.109.1.11
-    openstack_database_node02_address: 10.109.1.12
-    openstack_database_node03_address: 10.109.1.13
+    openstack_database_address: 10.109.1.14
+    openstack_database_node01_address: 10.109.1.14
+    openstack_database_node02_address: 10.109.1.15
+    openstack_database_node03_address: 10.109.1.16
     openstack_message_queue_address: 10.109.1.10
     openstack_message_queue_node01_address: 10.109.1.11
     openstack_message_queue_node02_address: 10.109.1.12

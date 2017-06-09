@@ -15,6 +15,10 @@ parameters:
     keepalived_vip_virtual_router_id: 69
     primary_first_nic: enp9s0f0
     primary_second_nic: enp9s0f1
+  neutron:
+    server:
+      backend:
+        tenant_vlan_range: "${_param:neutron_tenant_vlan_range}"
   linux:
     network:
       bridge: openvswitch

@@ -19,6 +19,10 @@ parameters:
     nova_vncproxy_url: https://${_param:cluster_public_host}:6080
     primary_first_nic: enp9s0f0
     primary_second_nic: enp9s0f1
+  neutron:
+    server:
+      backend:
+        tenant_vlan_range: "${_param:neutron_tenant_vlan_range}"
 
   linux:
     network:

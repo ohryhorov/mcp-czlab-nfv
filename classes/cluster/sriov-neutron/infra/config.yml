@@ -11,6 +11,7 @@ classes:
 - system.reclass.storage.salt
 - system.reclass.storage.system.physical_control_cluster
 - system.reclass.storage.system.openstack_control_cluster
+- system.reclass.storage.system.openstack_database_cluster
 - cluster.sriov-neutron.infra
 parameters:
   _param:
@@ -41,21 +42,13 @@ parameters:
         openstack_control_node01:
           classes:
           - cluster.${_param:cluster_name}.openstack.control_init
-          - service.galera.master.cluster
           params:
             linux_system_codename: xenial
-            mysql_cluster_role: master
         openstack_control_node02:
-          classes:
-          - service.galera.slave.cluster
           params:
-            mysql_cluster_role: slave
             linux_system_codename: xenial
         openstack_control_node03:
-          classes:
-          - service.galera.slave.cluster
           params:
-            mysql_cluster_role: slave
             linux_system_codename: xenial
         openstack_gateway_node01:
           name: gtw01
@@ -65,6 +58,11 @@ parameters:
           tenant_address: 10.0.2.6
           classes:
           - cluster.${_param:cluster_name}.openstack.gateway
+          params:
+            linux_system_codename: xenial
+	openstack_database_node01:
+          classes:
+          - cluster.${_param:cluster_name}.openstack.database_init
           params:
             linux_system_codename: xenial
         openstack_compute_rack01:

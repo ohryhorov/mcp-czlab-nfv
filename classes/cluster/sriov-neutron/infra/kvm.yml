@@ -10,6 +10,7 @@ classes:
 - system.glusterfs.server.volume.glance
 - system.glusterfs.server.volume.keystone
 - system.salt.control.cluster.openstack_control_cluster
+- system.salt.control.cluster.openstack_database_cluster
 - cluster.sriov-neutron.infra
 parameters:
   _param:
@@ -21,6 +22,7 @@ parameters:
     keepalived_vip_virtual_router_id: 69
     deploy_nic: enp9s0f0
     primary_nic: enp9s0f1
+    linux_system_codename: xenial
   salt:
     control:
       size: #RAM 4096,8192,16384,32768,65536
@@ -83,6 +85,12 @@ parameters:
             ctl02:
               image: ${_param:salt_control_xenial_image}
             ctl03:
+              image: ${_param:salt_control_xenial_image}
+            dbs01:
+              image: ${_param:salt_control_xenial_image}
+            dbs02:
+              image: ${_param:salt_control_xenial_image}
+            dbs03: 
               image: ${_param:salt_control_xenial_image}
   virt:
     nic:

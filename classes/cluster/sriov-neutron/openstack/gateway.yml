@@ -14,61 +14,63 @@ parameters:
     keepalived_vip_interface: br-ctl
     keepalived_vip_virtual_router_id: 69
     primary_first_nic: enp9s0f0
-    primary_second_nic: enp9s0f1
+    primary_second_nic: ens11f0
   neutron:
-    server:
+    gateway:
       backend:
         tenant_vlan_range: "${_param:neutron_tenant_vlan_range}"
+
   linux:
     network:
       bridge: openvswitch
       interface:
         eth1:
           enabled: true
-          type: slave
-          proto: manual
+          type: eth
+          proto: static
           name: ${_param:primary_first_nic}
-          master: bond0
         eth2:
           enabled: true
-          type: slave
+          type: eth
           proto: manual
           name: ${_param:primary_second_nic}
-          master: bond0
-        bond0:
+        eth1.201:
+          name: ${_param:primary_second_nic}.${_param:control_vlan}
           enabled: true
           proto: manual
-          ovs_bridge: br-floating
-          ovs_type: OVSPort
-          type: bond
+          type: vlan
           use_interfaces:
-          - ${_param:primary_first_nic}
           - ${_param:primary_second_nic}
-          slaves: ${_param:primary_first_nic} ${_param:primary_second_nic}
-          mode: active-backup
+        eth1.202:
+          name: ${_param:primary_second_nic}.${_param:tenant_vlan}
+          enabled: true
+          proto: manual
+          type: vlan
+          use_interfaces:
+          - ${_param:primary_second_nic}
         br-floating:
           enabled: true
           type: ovs_bridge
-        br-ctl:
+          mtu: 1500
+        br-mgmt:
           enabled: true
-          type: ovs_port
-          bridge: br-floating
+          type: bridge
           proto: static
-          ovs_options: tag=${_param:control_vlan}
+          address: ${_param:deploy_address}
+          netmask: 255.255.255.0
+          mtu: 1500
+          name_servers:
+          - ${_param:dns_server01}
+          - ${_param:dns_server02}
+          use_interfaces:
+          - ${_param:primary_first_nic}
+        br-mesh:
+          enabled: true
+          type: bridge
+          mtu: 1500
+          proto: static
           address: ${_param:single_address}
-          netmask: ${_param:control_network_netmask}
-        br-prv:
-          enabled: true
-          type: ovs_bridge
-        floating-to-prv:
-          enabled: true
-          type: ovs_port
-          port_type: patch
-          bridge: br-floating
-          peer: prv-to-floating
-        prv-to-floating:
-          enabled: true
-          type: ovs_port
-          port_type: patch
-          bridge: br-prv
-          peer: floating-to-prv
+          netmask: 255.255.255.0
+          use_interfaces:
+          - ${_param:primary_second_nic}.${_param:control_vlan}
+

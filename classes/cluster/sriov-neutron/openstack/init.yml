@@ -17,9 +17,9 @@ parameters:
     neutron_l3_ha: True
     neutron_tenant_network_types: "flat,vlan" # nondvr + dpdk
     neutron_tenant_vlan_range: 960:1000
-    sriov_nic01_device_name: eth7
-    sriov_nic01_numvfs: 7
-    sriov_nic01_physical_network: physnet1
+    sriov_nic01_device_name: ens11f1
+    sriov_nic01_numvfs: 10
+    sriov_nic01_physical_network: physnet2
     sriov_unsafe_interrupts: False
 
     galera_server_cluster_name: openstack_cluster
@@ -261,3 +261,4 @@ parameters:
           names:
           - ${_param:openstack_gateway_node03_hostname}
           - ${_param:openstack_gateway_node03_hostname}.${_param:cluster_domain}
+

@@ -18,48 +18,84 @@ parameters:
     cluster_node03_address: ${_param:openstack_control_node03_address}
     nova_vncproxy_url: https://${_param:cluster_public_host}:6080
     primary_first_nic: enp9s0f0
-    primary_second_nic: enp9s0f1
+    primary_second_nic: ens11f0
+    sriov_nic01_device_name: ens11f1
+    sriov_nic01_numvfs: 10
+    sriov_nic01_physical_network: physnet2
+
+  nova:
+    force_config_drive: False
+
   neutron:
-    server:
+    compute:
       backend:
         tenant_vlan_range: "${_param:neutron_tenant_vlan_range}"
+        sriov:
+          sriov_nic01:
+            devname: ${_param:sriov_nic01_device_name}
+            physical_network: ${_param:sriov_nic01_physical_network}
 
   linux:
+    system:
+      kernel:
+        sriov: True
+
     network:
       interface:
+        sriov_nic01_device_name:
+          name: ${_param:sriov_nic01_device_name}
+          enabled: true
+          type: eth
         eth1:
           mtu: 9000
           enabled: true
-          type: slave
+          type: eth
           proto: manual
           name: ${_param:primary_first_nic}
-          master: bond0
         eth2:
           mtu: 9000
           enabled: true
-          type: slave
+          type: eth
           proto: manual
           name: ${_param:primary_second_nic}
-          master: bond0
-        bond0:
+        eth1.201:
+          name: ${_param:primary_second_nic}.${_param:control_vlan}
           enabled: true
           proto: manual
-          ovs_bridge: br-prv
-          ovs_type: OVSPort
-          type: bond
+          type: vlan
           use_interfaces:
-          - ${_param:primary_second_nic} ${_param:primary_first_nic}
-          slaves: ${_param:primary_first_nic}
-          mode: active-backup
+          - ${_param:primary_second_nic}
+        eth1.202:
+          name: ${_param:primary_second_nic}.${_param:tenant_vlan}
+          enabled: true
+          proto: manual
+          type: vlan
+          address: ${_param:tenant_address}
+          netmask: 255.255.255.0
+          use_interfaces:
+          - ${_param:primary_second_nic}
+        br-mgmt:
+          enabled: true
+          type: bridge
+          proto: static
+          address: ${_param:deploy_address}
+          netmask: 255.255.255.0
+          name_servers:
+          - ${_param:dns_server01}
+          - ${_param:dns_server02}
+          use_interfaces:
+          - ${_param:primary_first_nic}
+        br-mesh:
+          enabled: true
+          type: bridge
+          proto: static
+          address: ${_param:single_address}
+          netmask: 255.255.255.0
+          use_interfaces:
+          - ${_param:primary_second_nic}.${_param:control_vlan}
         br-prv:
           enabled: true
           type: ovs_bridge
-        br-mgmt:
-          enabled: true
-          type: ovs_port
-          bridge: br-prv
-          proto: static
-          ovs_options: tag=${_param:control_vlan}
-          address: ${_param:single_address}
-          netmask: ${_param:control_network_netmask}
+
       bridge: openvswitch
+

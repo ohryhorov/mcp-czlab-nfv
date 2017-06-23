@@ -15,6 +15,7 @@ parameters:
     neutron_compute_agent_mode: legacy
 
     neutron_l3_ha: True
+    neutron_enable_qos: True
     neutron_tenant_network_types: "flat,vlan" # nondvr + dpdk
     neutron_tenant_vlan_range: 960:1000
     sriov_nic01_device_name: ens11f1

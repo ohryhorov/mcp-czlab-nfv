@@ -29,6 +29,7 @@ parameters:
   neutron:
     compute:
       backend:
+        qos: ${_param:neutron_enable_qos}
         tenant_vlan_range: "${_param:neutron_tenant_vlan_range}"
         sriov:
           sriov_nic01:

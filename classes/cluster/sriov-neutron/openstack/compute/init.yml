@@ -42,6 +42,7 @@ parameters:
         sriov: True
 
     network:
+      bridge: openvswitch
       interface:
         sriov_nic01_device_name:
           name: ${_param:sriov_nic01_device_name}
@@ -97,6 +98,4 @@ parameters:
         br-prv:
           enabled: true
           type: ovs_bridge
-
-      bridge: openvswitch
 

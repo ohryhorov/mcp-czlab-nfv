@@ -73,4 +73,7 @@ parameters:
           netmask: 255.255.255.0
           use_interfaces:
           - ${_param:primary_second_nic}.${_param:control_vlan}
+        br-prv:
+          enabled: true
+          type: ovs_bridge
 

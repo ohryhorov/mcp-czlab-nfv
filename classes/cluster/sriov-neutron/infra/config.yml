@@ -16,8 +16,8 @@ classes:
 parameters:
   _param:
     salt_master_base_environment: prd
-    reclass_data_repository: "https://github.com/AKamyshnikova/mcp-sriov-neutron-vol2.git"
-    reclass_data_revision: master
+    reclass_data_repository: "https://github.com/AKamyshnikova/mcp-czlab-nfv.git"
+    reclass_data_revision: mcp1.1/dpdk
     reclass_config_master: ${_param:infra_config_deploy_address}
     single_address: ${_param:infra_config_address}
     deploy_address: ${_param:infra_config_deploy_address}
@@ -76,7 +76,7 @@ parameters:
           name: ${_param:openstack_compute_rack01_hostname}<<count>>
           domain: ${_param:cluster_domain}
           classes:
-          - cluster.${_param:cluster_name}.openstack.compute.sriov
+          - cluster.${_param:cluster_name}.openstack.compute.dpdk
           repeat:
             count: 1
             start: 1

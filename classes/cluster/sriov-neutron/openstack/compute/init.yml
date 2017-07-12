@@ -24,16 +24,13 @@ parameters:
     primary_second_nic: ens11f0
     linux_system_codename: xenial
     dpdk0_name: ens11f0
-    dpdk0_pci: '"0000:81:00.0'
+    dpdk0_pci: '0000:81:00.0'
     compute_dpdk_driver: uio
-    compute_ovs_pmd_cpu_mask: ${_param:compute_ovs_pmd_cpu_mask}
-    compute_ovs_dpdk_socket_mem: ${_param:compute_ovs_dpdk_socket_mem}
-    compute_ovs_dpdk_lcore_mask: ${_param:compute_ovs_dpdk_lcore_mask}
+    ovs_pmd_cpu_mask: ${_param:compute_ovs_pmd_cpu_mask}
+    ovs_dpdk_socket_mem: ${_param:compute_ovs_dpdk_socket_mem}
+    ovs_dpdk_lcore_mask: ${_param:compute_ovs_dpdk_lcore_mask}
     compute_ovs_memory_channels: "2"
 
-
-  nova:
-    force_config_drive: False
 
   neutron:
     compute:
@@ -43,10 +40,6 @@ parameters:
 
 
   linux:
-    system:
-      kernel:
-        sriov: True
-
     network:
       host:
         hostname:
@@ -54,7 +47,6 @@ parameters:
           names:
           - ${linux:network:hostname}
           - ${linux:network:fqdn}
-      bridge: openvswitch
       interface:
         dpdk0:
           name: ${_param:dpdk0_name}
@@ -116,11 +108,11 @@ parameters:
           netmask: 255.255.255.0
           use_interfaces:
           - ${_param:primary_second_nic}.${_param:control_vlan}
-         br-prv:
+        br-prv:
           enabled: true
           type: dpdk_ovs_bridge
       openvswitch:
-        pmd_cpu_mask: "${_param:compute_ovs_pmd_cpu_mask}"
-        dpdk_socket_mem: "${_param:compute_ovs_dpdk_socket_mem}"
-        dpdk_lcore_mask: "${_param:compute_ovs_dpdk_lcore_mask}"
+        pmd_cpu_mask: "${_param:ovs_pmd_cpu_mask}"
+        dpdk_socket_mem: "${_param:ovs_dpdk_socket_mem}"
+        dpdk_lcore_mask: "${_param:ovs_dpdk_lcore_mask}"
 

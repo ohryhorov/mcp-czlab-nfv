@@ -3,9 +3,12 @@ classes:
 - system.linux.system.repo.mcp.openstack
 - system.linux.system.repo.mcp.extra
 - system.nova.compute.cluster
+- system.nova.compute.nfv.hugepages
+- system.nova.compute.nfv.cpu_pinning
 - system.neutron.compute.cluster
 - system.ceilometer.agent.cluster
 - cluster.sriov-neutron.infra
+
 parameters:
   _param:
     cluster_vip_address: ${_param:openstack_control_address}
@@ -19,9 +22,15 @@ parameters:
     nova_vncproxy_url: https://${_param:cluster_public_host}:6080
     primary_first_nic: enp9s0f0
     primary_second_nic: ens11f0
-    sriov_nic01_device_name: ens11f1
-    sriov_nic01_numvfs: 10
-    sriov_nic01_physical_network: physnet2
+    linux_system_codename: xenial
+    dpdk0_name: ens11f0
+    dpdk0_pci: '"0000:81:00.0'
+    compute_dpdk_driver: uio
+    compute_ovs_pmd_cpu_mask: ${_param:compute_ovs_pmd_cpu_mask}
+    compute_ovs_dpdk_socket_mem: ${_param:compute_ovs_dpdk_socket_mem}
+    compute_ovs_dpdk_lcore_mask: ${_param:compute_ovs_dpdk_lcore_mask}
+    compute_ovs_memory_channels: "2"
+
 
   nova:
     force_config_drive: False
@@ -31,10 +40,7 @@ parameters:
       backend:
         qos: ${_param:neutron_enable_qos}
         tenant_vlan_range: "${_param:neutron_tenant_vlan_range}"
-        sriov:
-          sriov_nic01:
-            devname: ${_param:sriov_nic01_device_name}
-            physical_network: ${_param:sriov_nic01_physical_network}
+
 
   linux:
     system:
@@ -42,12 +48,27 @@ parameters:
         sriov: True
 
     network:
+      host:
+        hostname:
+          address: ${_param:single_address}
+          names:
+          - ${linux:network:hostname}
+          - ${linux:network:fqdn}
       bridge: openvswitch
       interface:
-        sriov_nic01_device_name:
-          name: ${_param:sriov_nic01_device_name}
+        dpdk0:
+          name: ${_param:dpdk0_name}
+          pci: ${_param:dpdk0_pci}
+          driver: igb_uio
+          bond: dpdkbond1
           enabled: true
-          type: eth
+          type: dpdk_ovs_port
+          n_rxq: "4"
+        dpdkbond1:
+          enabled: true
+          bridge: br-prv
+          type: dpdk_ovs_bond
+          mode: active-backup
         eth1:
           mtu: 9000
           enabled: true
@@ -95,7 +116,11 @@ parameters:
           netmask: 255.255.255.0
           use_interfaces:
           - ${_param:primary_second_nic}.${_param:control_vlan}
-        br-prv:
+         br-prv:
           enabled: true
-          type: ovs_bridge
+          type: dpdk_ovs_bridge
+      openvswitch:
+        pmd_cpu_mask: "${_param:compute_ovs_pmd_cpu_mask}"
+        dpdk_socket_mem: "${_param:compute_ovs_dpdk_socket_mem}"
+        dpdk_lcore_mask: "${_param:compute_ovs_dpdk_lcore_mask}"
 

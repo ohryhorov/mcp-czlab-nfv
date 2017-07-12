@@ -4,8 +4,8 @@ parameters:
     admin_email: root@localhost
     openstack_version: ocata
     ##Neutron osv/nodvr + dpdk
-    neutron_global_physnet_mtu: 1500
-    neutron_external_mtu: 1500
+    neutron_global_physnet_mtu: 9000
+    neutron_external_mtu: 9000
     neutron_compute_external_access: False
     neutron_control_dvr: False
     neutron_gateway_dvr: False
@@ -18,10 +18,18 @@ parameters:
     neutron_enable_qos: True
     neutron_tenant_network_types: "flat,vlan" # nondvr + dpdk
     neutron_tenant_vlan_range: 960:1000
-    sriov_nic01_device_name: ens11f1
-    sriov_nic01_numvfs: 10
-    sriov_nic01_physical_network: physnet2
-    sriov_unsafe_interrupts: False
+    compute_hugepages_size: 2M
+    compute_hugepages_count: 512
+    compute_hugepages_mount: /mnt/hugepages_2M
+    nova_cpu_pinning: "0,1,2,3,4,5,12,13,14,15"
+    compute_kernel_isolcpu: ${_param:nova_cpu_pinning}
+
+    compute_dpdk_driver: uio
+    compute_ovs_pmd_cpu_mask: "0x6"
+    compute_ovs_dpdk_socket_mem: "1024"
+    compute_ovs_dpdk_lcore_mask: "0x400"
+    compute_ovs_memory_channels: "2"
+
 
     galera_server_cluster_name: openstack_cluster
     galera_server_maintenance_password: wbTfEL1RUgwXJzFa

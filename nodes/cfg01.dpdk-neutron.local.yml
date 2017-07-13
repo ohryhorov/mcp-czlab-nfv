@@ -3,7 +3,7 @@ classes:
 parameters:
     _param:
         linux_system_codename: xenial
-        reclass_data_revision: master
+        reclass_data_revision: mcp1.1/dpdk
     linux:
         system:
             name: cfg01

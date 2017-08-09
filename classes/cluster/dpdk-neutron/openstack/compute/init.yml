@@ -21,10 +21,11 @@ parameters:
     cluster_node03_address: ${_param:openstack_control_node03_address}
     nova_vncproxy_url: https://${_param:cluster_public_host}:6080
     primary_first_nic: enp9s0f0
-    primary_second_nic: ens11f0
+    primary_second_nic: enp9s0f1
+    primary_third_nic: ens11f0
     linux_system_codename: xenial
-    dpdk0_name: ens11f0
-    dpdk0_pci: '0000:81:00.0'
+    dpdk0_name: ens11f1
+    dpdk0_pci: '0000:81:00.1'
     compute_dpdk_driver: uio
     ovs_pmd_cpu_mask: ${_param:compute_ovs_pmd_cpu_mask}
     ovs_dpdk_socket_mem: ${_param:compute_ovs_dpdk_socket_mem}
@@ -73,22 +74,28 @@ parameters:
           type: eth
           proto: manual
           name: ${_param:primary_second_nic}
+        eth3:
+          mtu: 9000
+          enabled: true
+          type: eth
+          proto: manual
+          name: ${_param:primary_third_nic}
         eth1.201:
-          name: ${_param:primary_second_nic}.${_param:control_vlan}
+          name: ${_param:primary_third_nic}.${_param:control_vlan}
           enabled: true
           proto: manual
           type: vlan
           use_interfaces:
-          - ${_param:primary_second_nic}
+          - ${_param:primary_third_nic}
         eth1.202:
-          name: ${_param:primary_second_nic}.${_param:tenant_vlan}
+          name: ${_param:primary_third_nic}.${_param:tenant_vlan}
           enabled: true
           proto: manual
           type: vlan
           address: ${_param:tenant_address}
           netmask: 255.255.255.0
           use_interfaces:
-          - ${_param:primary_second_nic}
+          - ${_param:primary_third_nic}
         br-mgmt:
           enabled: true
           type: bridge
@@ -107,7 +114,7 @@ parameters:
           address: ${_param:single_address}
           netmask: 255.255.255.0
           use_interfaces:
-          - ${_param:primary_second_nic}.${_param:control_vlan}
+          - ${_param:primary_third_nic}.${_param:control_vlan}
         br-prv:
           enabled: true
           type: dpdk_ovs_bridge

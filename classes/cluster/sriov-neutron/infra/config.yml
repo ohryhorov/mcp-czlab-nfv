@@ -17,7 +17,7 @@ parameters:
   _param:
     salt_master_base_environment: prd
     reclass_data_repository: "https://github.com/AKamyshnikova/mcp-sriov-neutron-vol2.git"
-    reclass_data_revision: master
+    reclass_data_revision: mcp1.1/sr-iov
     reclass_config_master: ${_param:infra_config_deploy_address}
     single_address: ${_param:infra_config_address}
     deploy_address: ${_param:infra_config_deploy_address}

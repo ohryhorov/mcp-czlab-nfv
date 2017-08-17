@@ -58,6 +58,7 @@ parameters:
           proto: static
           address: ${_param:deploy_address}
           netmask: 255.255.255.0
+          gateway: 10.109.9.1
           mtu: 1500
           name_servers:
           - ${_param:dns_server01}

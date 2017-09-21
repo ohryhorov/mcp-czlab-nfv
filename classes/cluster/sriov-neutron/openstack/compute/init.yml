@@ -20,8 +20,8 @@ parameters:
     primary_first_nic: enp9s0f0
     primary_second_nic: ens11f0
     sriov_nic01_device_name: ens11f1
-    sriov_nic01_numvfs: 10
-    sriov_nic01_physical_network: physnet2
+    #sriov_nic01_numvfs: 10
+    #sriov_nic01_physical_network: physnet2
 
   nova:
     force_config_drive: False
@@ -31,15 +31,15 @@ parameters:
       backend:
         qos: ${_param:neutron_enable_qos}
         tenant_vlan_range: "${_param:neutron_tenant_vlan_range}"
-        sriov:
-          sriov_nic01:
-            devname: ${_param:sriov_nic01_device_name}
-            physical_network: ${_param:sriov_nic01_physical_network}
+        #sriov:
+        #  sriov_nic01:
+        #    devname: ${_param:sriov_nic01_device_name}
+        #    physical_network: ${_param:sriov_nic01_physical_network}
 
   linux:
     system:
       kernel:
-        sriov: True
+        sriov: False
 
     network:
       bridge: openvswitch

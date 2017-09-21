@@ -18,10 +18,10 @@ parameters:
     neutron_enable_qos: True
     neutron_tenant_network_types: "flat,vlan" # nondvr + dpdk
     neutron_tenant_vlan_range: 960:1000
-    sriov_nic01_device_name: ens11f1
-    sriov_nic01_numvfs: 10
-    sriov_nic01_physical_network: physnet2
-    sriov_unsafe_interrupts: False
+    #sriov_nic01_device_name: ens11f1
+    #sriov_nic01_numvfs: 10
+    #sriov_nic01_physical_network: physnet2
+    #sriov_unsafe_interrupts: False
 
     galera_server_cluster_name: openstack_cluster
     galera_server_maintenance_password: wbTfEL1RUgwXJzFa

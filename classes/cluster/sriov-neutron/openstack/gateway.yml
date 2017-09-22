@@ -7,7 +7,7 @@ classes:
 - cluster.sriov-neutron.infra
 parameters:
   _param:
-    interface_mtu: 9000
+    interface_mtu: 1500
     cluster_vip_address: ${_param:openstack_control_address}
     linux_system_codename: xenial
     keepalived_vip_interface: br-ctl
@@ -51,15 +51,15 @@ parameters:
         br-floating:
           enabled: true
           type: ovs_bridge
-          mtu: 9000
+          mtu: 1500
         br-mgmt:
           enabled: true
           type: bridge
           proto: static
           address: ${_param:deploy_address}
           netmask: 255.255.255.0
+          mtu: 1500
           gateway: ${_param:deploy_network_gateway}
-          mtu: 9000
           name_servers:
           - ${_param:dns_server01}
           - ${_param:dns_server02}
@@ -68,7 +68,7 @@ parameters:
         br-mesh:
           enabled: true
           type: bridge
-          mtu: 9000
+          mtu: 1500
           proto: static
           address: ${_param:single_address}
           netmask: 255.255.255.0

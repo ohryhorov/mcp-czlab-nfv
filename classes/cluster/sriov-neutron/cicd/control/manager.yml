@@ -1,4 +1,0 @@
-classes:
-  - system.docker.swarm.manager
-  - cluster.sriov-neutron.infra
-  - cluster.sriov-neutron.cicd.control

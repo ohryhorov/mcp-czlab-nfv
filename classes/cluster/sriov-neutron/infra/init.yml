@@ -4,7 +4,6 @@ classes:
 - system.openssh.server.team.networking
 - system.openssh.server.team.lab
 - cluster.sriov-neutron.openstack
-- cluster.sriov-neutron.cicd
 parameters:
   _param:
     salt_control_trusty_image: http://apt-mk.mirantis.com/images/ubuntu-14-04-x64-mcp1.1.qcow2

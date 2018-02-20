@@ -8,7 +8,7 @@ classes:
 - system.ceilometer.client
 - system.ceilometer.client.neutron
 - system.neutron.control.openvswitch.cluster
-#- system.neutron.control.openvswitch.sriov
+- system.neutron.control.openvswitch.sriov
 - system.keystone.server.cluster
 - system.keystone.server.wsgi
 - system.glance.control.cluster

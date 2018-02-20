@@ -22,22 +22,22 @@ parameters:
     single_address: ${_param:infra_config_address}
     deploy_address: ${_param:infra_config_deploy_address}
     linux_system_codename: xenial
-    salt_api_password_hash: "<<WILL_BE_GENERATED>>"
+    salt_api_password_hash: $6$sGnRlxGf$al5jMCetLP.vfI/fTl3Z0N7Za1aeiexL487jAtyRABVfT3NlwZxQGVhO7S1N8OwS/34VHYwZQA8lkXwKMN/GS1
     salt_master_host: ${_param:infra_config_address}
   reclass:
     storage:
       node:
         infra_kvm_node01:
           params:
-            keepalived_vip_priority: 100
+            keepalived_vip_priority: 101
             linux_system_codename: xenial
         infra_kvm_node02:
           params:
-            keepalived_vip_priority: 101
+            keepalived_vip_priority: 102
             linux_system_codename: xenial
         infra_kvm_node03:
           params:
-            keepalived_vip_priority: 102
+            keepalived_vip_priority: 103
             linux_system_codename: xenial
         openstack_control_node01:
           classes:
@@ -54,13 +54,15 @@ parameters:
           name: gtw01
           domain: ${_param:cluster_domain}
           classes:
+          - cluster.${_param:cluster_name}.infra.kvm
           - cluster.${_param:cluster_name}.openstack.gateway
           params:
             salt_master_host: 10.109.9.196
             single_address: 10.109.1.6
             tenant_address: 10.0.2.6
-            deploy_address: 10.109.9.8
+            deploy_address: 10.109.9.7
             linux_system_codename: xenial
+            keepalived_vip_priority: 103
         openstack_database_node01:
           classes:
           - cluster.${_param:cluster_name}.openstack.database_init
@@ -90,6 +92,27 @@ parameters:
                 start: 101
               deploy_address:
                 value: 10.109.9.9
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            linux_system_codename: xenial
+        openstack_compute_rack02:
+          name: ${_param:openstack_compute_rack01_hostname}<<count>>
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.openstack.compute-less.sriov
+          repeat:
+            count: 1
+            start: 2
+            digits: 3
+            params:
+              single_address:
+                value: ${_param:openstack_compute_rack01_single_subnet}.<<count>>
+                start: 102
+              tenant_address:
+                value: ${_param:openstack_compute_rack01_tenant_subnet}.<<count>>
+                start: 102
+              deploy_address:
+                value: 10.109.9.8
           params:
             salt_master_host: ${_param:reclass_config_master}
             linux_system_codename: xenial

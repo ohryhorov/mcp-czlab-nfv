@@ -17,11 +17,11 @@ parameters:
     cluster_node03_hostname: ${_param:openstack_control_node03_hostname}
     cluster_node03_address: ${_param:openstack_control_node03_address}
     nova_vncproxy_url: https://${_param:cluster_public_host}:6080
-    primary_first_nic: enp9s0f0
-    primary_second_nic: ens3f0
-    sriov_nic01_device_name: ens3f1
-    sriov_nic01_numvfs: 10
-    sriov_nic01_physical_network: physnet2
+    primary_first_nic_cmp02: enp9s0f0
+    primary_second_nic_cmp02: ens3f0
+    sriov_nic01_device_name_cmp02: ens3f1
+    sriov_nic01_numvfs_cmp02: 10
+    sriov_nic01_physical_network_cmp02: physnet2
 
   nova:
     force_config_drive: False
@@ -33,8 +33,8 @@ parameters:
         tenant_vlan_range: "${_param:neutron_tenant_vlan_range}"
         sriov:
           sriov_nic01:
-            devname: ${_param:sriov_nic01_device_name}
-            physical_network: ${_param:sriov_nic01_physical_network}
+            devname: ${_param:sriov_nic01_device_name_cmp02}
+            physical_network: ${_param:sriov_nic01_physical_network_cmp02}
 
   linux:
     system:
@@ -45,7 +45,7 @@ parameters:
       bridge: openvswitch
       interface:
         sriov_nic01_device_name:
-          name: ${_param:sriov_nic01_device_name}
+          name: ${_param:sriov_nic01_device_name_cmp02}
           enabled: true
           type: eth
         eth1:
@@ -53,29 +53,30 @@ parameters:
           enabled: true
           type: eth
           proto: manual
-          name: ${_param:primary_first_nic}
+          name: ${_param:primary_first_nic_cmp02}
         eth2:
           mtu: 9000
           enabled: true
           type: eth
           proto: manual
-          name: ${_param:primary_second_nic}
+          ipflush_onchange: true
+          name: ${_param:primary_second_nic_cmp02}
         eth1.201:
-          name: ${_param:primary_second_nic}.${_param:control_vlan}
+          name: ${_param:primary_second_nic_cmp02}.${_param:control_vlan}
           enabled: true
           proto: manual
           type: vlan
           use_interfaces:
-          - ${_param:primary_second_nic}
+          - ${_param:primary_second_nic_cmp02}
         eth1.202:
-          name: ${_param:primary_second_nic}.${_param:tenant_vlan}
+          name: ${_param:primary_second_nic_cmp02}.${_param:tenant_vlan}
           enabled: true
           proto: manual
           type: vlan
-          address: ${_param:tenant_address}
+          aens3f1ddress: ${_param:tenant_address}
           netmask: 255.255.255.0
           use_interfaces:
-          - ${_param:primary_second_nic}
+          - ${_param:primary_second_nic_cmp02}
         br-mgmt:
           enabled: true
           type: bridge
@@ -86,7 +87,7 @@ parameters:
           - ${_param:dns_server01}
           - ${_param:dns_server02}
           use_interfaces:
-          - ${_param:primary_first_nic}
+          - ${_param:primary_first_nic_cmp02}
         br-mesh:
           enabled: true
           type: bridge
@@ -94,7 +95,7 @@ parameters:
           address: ${_param:single_address}
           netmask: 255.255.255.0
           use_interfaces:
-          - ${_param:primary_second_nic}.${_param:control_vlan}
+          - ${_param:primary_second_nic_cmp02}.${_param:control_vlan}
         br-prv:
           enabled: true
           type: ovs_bridge

@@ -1,0 +1,4 @@
+classes:
+- system.nova.compute.nfv.sriov-cmp02
+- system.neutron.compute.nfv.sriov-cmp02
+- cluster.sriov-neutron.openstack.compute-less

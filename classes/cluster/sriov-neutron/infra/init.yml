@@ -1,7 +1,7 @@
 
 classes:
 - system.linux.system.single
-- system.openssh.server.team.networking
+- system.openssh.server.team.oscore_devops
 - system.openssh.server.team.lab
 - cluster.sriov-neutron.openstack
 parameters:

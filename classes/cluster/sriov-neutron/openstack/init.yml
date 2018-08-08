@@ -91,7 +91,7 @@ parameters:
     openstack_control_node01_address: 10.109.1.11
     openstack_control_node02_address: 10.109.1.12
     openstack_control_node03_address: 10.109.1.13
-    openstack_database_address: 10.109.1.14
+    openstack_database_address: 10.109.1.17
     openstack_database_node01_address: 10.109.1.14
     openstack_database_node02_address: 10.109.1.15
     openstack_database_node03_address: 10.109.1.16
@@ -104,7 +104,7 @@ parameters:
     openstack_telemetry_node01_address: 10.109.1.11
     openstack_telemetry_node02_address: 10.109.1.12
     openstack_telemetry_node03_address: 10.109.1.13
-    openstack_gateway_node01_address: 10.109.1.6
+    openstack_gateway_node01_address: 10.109.1.9
     openstack_gateway_node02_address: 10.109.1.7
     openstack_gateway_node03_address: 10.109.1.8
     openstack_gateway_node01_tenant_address: 10.0.2.6
@@ -139,6 +139,7 @@ parameters:
     openstack_gateway_node01_hostname: gtw01
     openstack_gateway_node02_hostname: gtw02
     openstack_gateway_node03_hostname: gtw03
+    apt_mk_version: testing
     
     # Billing
     #keystone_billometer_password: vryk2sI8iL6fXbji

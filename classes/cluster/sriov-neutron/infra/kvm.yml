@@ -11,6 +11,7 @@ classes:
 - system.glusterfs.server.volume.keystone
 - system.salt.control.cluster.openstack_control_cluster
 - system.salt.control.cluster.openstack_database_cluster
+- system.salt.control.cluster.openstack_gateway_cluster
 - cluster.sriov-neutron.infra
 parameters:
   _param:
@@ -77,6 +78,11 @@ parameters:
           ram: 8192
           disk_profile: xxlarge
           net_profile: default
+        openstack.gateway:
+          cpu: 32
+          ram: 65536
+          disk_profile: small
+          net_profile: gateway
       cluster:
         internal:
           node:
@@ -92,6 +98,12 @@ parameters:
               image: ${_param:salt_control_xenial_image}
             dbs03: 
               image: ${_param:salt_control_xenial_image}
+            gtw01:
+              image: ${_param:salt_control_xenial_image}
+            gtw02:
+              image: ${_param:salt_control_xenial_image}
+            gtw03: 
+              image: ${_param:salt_control_xenial_image}
   virt:
     nic:
       default:
@@ -99,6 +111,16 @@ parameters:
           bridge: br-mgmt
         eth0:
           bridge: br-ctl
+      gateway:
+        eth0:
+          bridge: br-tenant
+          model: virtio
+        eth2:
+          bridge: br-mgmt
+          model: virtio
+        eth1:
+          bridge: br-ctl
+          model: virtio
   linux:
     network:
       interface:
@@ -106,6 +128,7 @@ parameters:
           enabled: true
           type: eth
           proto: manual
+          ipflush_onchange: true
           name: ${_param:deploy_nic}
         eth1:
           enabled: true
@@ -154,6 +177,12 @@ parameters:
           netmask: ${_param:control_network_netmask}
           use_interfaces:
           - ${_param:primary_nic}.${_param:control_vlan}
+        br-tenant:
+          enabled: true
+          type: bridge
+          proto: manual
+          use_interfaces:
+          - ${_param:primary_nic}
   #   system:
   #     package:
   #       linux-image-4.8.0-39-generic:

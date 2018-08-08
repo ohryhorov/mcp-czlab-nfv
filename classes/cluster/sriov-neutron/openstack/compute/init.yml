@@ -44,13 +44,14 @@ parameters:
     network:
       bridge: openvswitch
       interface:
-        sriov_nic01_device_name:
-          name: ${_param:sriov_nic01_device_name}
-          enabled: true
-          type: eth
+#        sriov_nic01_device_name:
+#          name: ${_param:sriov_nic01_device_name}
+#          enabled: true
+#          type: eth
         eth1:
           mtu: 9000
           enabled: true
+          ipflush_onchange: true
           type: eth
           proto: manual
           name: ${_param:primary_first_nic}
@@ -82,6 +83,7 @@ parameters:
           proto: static
           address: ${_param:deploy_address}
           netmask: 255.255.255.0
+          gateway: ${_param:deploy_network_gateway}
           name_servers:
           - ${_param:dns_server01}
           - ${_param:dns_server02}

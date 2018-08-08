@@ -54,13 +54,33 @@ parameters:
           name: gtw01
           domain: ${_param:cluster_domain}
           classes:
-          - cluster.${_param:cluster_name}.infra.kvm
           - cluster.${_param:cluster_name}.openstack.gateway
           params:
             salt_master_host: 10.109.9.196
-            single_address: 10.109.1.6
+            single_address: 10.109.1.9
             tenant_address: 10.0.2.6
-            deploy_address: 10.109.9.7
+            linux_system_codename: xenial
+            keepalived_vip_priority: 103
+        openstack_gateway_node02:
+          name: gtw02
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.openstack.gateway
+          params:
+            salt_master_host: 10.109.9.196
+            single_address: 10.109.1.7
+            tenant_address: 10.0.2.7
+            linux_system_codename: xenial
+            keepalived_vip_priority: 103
+        openstack_gateway_node03:
+          name: gtw03
+          domain: ${_param:cluster_domain}
+          classes:
+          - cluster.${_param:cluster_name}.openstack.gateway
+          params:
+            salt_master_host: 10.109.9.196
+            single_address: 10.109.1.8
+            tenant_address: 10.0.2.8
             linux_system_codename: xenial
             keepalived_vip_priority: 103
         openstack_database_node01:
@@ -99,7 +119,7 @@ parameters:
           name: ${_param:openstack_compute_rack01_hostname}<<count>>
           domain: ${_param:cluster_domain}
           classes:
-          - cluster.${_param:cluster_name}.openstack.compute-less.sriov
+          - cluster.${_param:cluster_name}.openstack.compute.sriov
           repeat:
             count: 1
             start: 2

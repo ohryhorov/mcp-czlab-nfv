@@ -12,8 +12,9 @@ parameters:
     linux_system_codename: xenial
     keepalived_vip_interface: br-ctl
     keepalived_vip_virtual_router_id: 69
-    primary_first_nic: ${_param:deploy_nic}
-    primary_second_nic: enp9s0f1
+    primary_first_nic: ens2
+    primary_second_nic: ens3
+    bridge_tenant_nic: ens4
   neutron:
     gateway:
       backend:
@@ -30,23 +31,28 @@ parameters:
     network:
       bridge: openvswitch
       interface:
-#        eth1:
-#          enabled: true
-#          type: eth
-#          proto: static
-#          name: ${_param:primary_first_nic}
-#        eth2:
-#          enabled: true
-#          type: eth
-#          proto: manual
-#          name: ${_param:primary_second_nic}
+        eth1:
+          enabled: true
+          type: eth
+          proto: dhcp
+          name: ${_param:primary_first_nic}
+        eth2:
+          enabled: true
+          type: eth
+          proto: manual
+          name: ${_param:primary_second_nic}
+        eth3:
+          enabled: true
+          type: eth
+          proto: manual
+          name: ${_param:bridge_tenant_nic}
 #        eth1.201:
 #         name: ${_param:primary_second_nic}.${_param:control_vlan}
 #         enabled: true
 #         proto: manual
 #         type: vlan
 #         use_interfaces:
-#         - enp9s0f1
+#         - ${_param:primary_second_nic}
 #       eth1.202:
 #         name: ${_param:primary_second_nic}.${_param:tenant_vlan}
 #         enabled: true
@@ -79,8 +85,11 @@ parameters:
           address: ${_param:single_address}
           netmask: 255.255.255.0
           use_interfaces:
-          - ${_param:primary_second_nic}.${_param:control_vlan}
+#          - ${_param:primary_second_nic}.${_param:control_vlan}
+          - ${_param:primary_second_nic}
         br-prv:
           enabled: true
           type: ovs_bridge
+          use_interfaces:
+          - ${_param:bridge_tenant_nic} 
 

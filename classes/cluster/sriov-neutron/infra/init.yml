@@ -28,8 +28,8 @@ parameters:
     infra_kvm_node02_hostname: kvm02
     infra_kvm_node03_hostname: kvm03
 
-    openstack_gateway_node01_hostname: gtw01
-    openstack_gateway_node01_address: 10.109.9.7
+#    openstack_gateway_node01_hostname: gtw01
+#    openstack_gateway_node01_address: 10.109.9.7
 
 
     glusterfs_node01_address: ${_param:infra_kvm_node01_deploy_address}

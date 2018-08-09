@@ -43,9 +43,12 @@ parameters:
           name: ${_param:primary_second_nic}
         eth3:
           enabled: true
-          type: eth
           proto: manual
           name: ${_param:bridge_tenant_nic}
+          ovs_port_type: OVSPort
+          type: ovs_port
+          ovs_bridge: br-prv
+          bridge: br-prv
 #        eth1.201:
 #         name: ${_param:primary_second_nic}.${_param:control_vlan}
 #         enabled: true

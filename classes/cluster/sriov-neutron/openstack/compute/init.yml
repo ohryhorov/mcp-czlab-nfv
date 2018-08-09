@@ -58,9 +58,13 @@ parameters:
         eth2:
           mtu: 9000
           enabled: true
-          type: eth
+#          type: eth
           proto: manual
           name: ${_param:primary_second_nic}
+          ovs_port_type: OVSPort
+          type: ovs_port
+          ovs_bridge: br-prv
+          bridge: br-prv
         eth1.201:
           name: ${_param:primary_second_nic}.${_param:control_vlan}
           enabled: true
@@ -100,4 +104,5 @@ parameters:
         br-prv:
           enabled: true
           type: ovs_bridge
-
+          use_interfaces:
+          - ${_param:primary_second_nic}

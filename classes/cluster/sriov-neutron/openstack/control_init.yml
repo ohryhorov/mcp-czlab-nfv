@@ -6,3 +6,6 @@ classes:
 - system.keystone.client.service.aodh
 - system.keystone.client.service.glare
 - system.keystone.client.service.cinder3
+parameters:
+  _param:
+    cluster_public_protocol: http

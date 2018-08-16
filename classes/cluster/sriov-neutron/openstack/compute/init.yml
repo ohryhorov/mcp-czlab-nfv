@@ -26,6 +26,12 @@ parameters:
   nova:
     force_config_drive: False
 
+    compute:
+      upgrade:
+        upgrade_enabled: true
+        old_release: ocata
+        new_release: pike
+
   neutron:
     compute:
       backend:

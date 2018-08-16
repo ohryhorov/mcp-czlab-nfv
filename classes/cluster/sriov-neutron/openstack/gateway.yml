@@ -49,6 +49,12 @@ parameters:
           type: ovs_port
           ovs_bridge: br-prv
           bridge: br-prv
+        eth3.1001:
+          enabled: true
+          proto: manual
+          name: ${_param:bridge_tenant_nic}.1001
+          type: ovs_port
+          bridge: br-floating
 #        eth1.201:
 #         name: ${_param:primary_second_nic}.${_param:control_vlan}
 #         enabled: true
@@ -95,4 +101,8 @@ parameters:
           type: ovs_bridge
           use_interfaces:
           - ${_param:bridge_tenant_nic} 
-
+        phy-public:
+          enabled: true
+          type: ovs_port
+          bridge: br-floating
+          proto: manual

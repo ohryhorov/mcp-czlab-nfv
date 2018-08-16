@@ -2,7 +2,10 @@ parameters:
   _param:
     openstack_region: RegionOne
     admin_email: root@localhost
-    openstack_version: pike
+    openstack_version: ocata
+
+    cluster_public_protocol: http
+
     ##Neutron osv/nodvr + dpdk
     neutron_global_physnet_mtu: 1500
     neutron_external_mtu: 1500

@@ -14,13 +14,14 @@ classes:
 - system.salt.control.cluster.openstack_gateway_cluster
 - system.salt.control.cluster
 - cluster.sriov-neutron.infra
+- system.nagios.server.single
 parameters:
   _param:
     cluster_vip_address: ${_param:infra_kvm_address}
     cluster_node01_address: ${_param:infra_kvm_node01_deploy_address}
     cluster_node02_address: ${_param:infra_kvm_node02_deploy_address}
     cluster_node03_address: ${_param:infra_kvm_node03_deploy_address}
-    keepalived_vip_interface: br_ctl
+    keepalived_vip_interface: br-ctl
     keepalived_vip_virtual_router_id: 69
     deploy_nic: enp9s0f0
     primary_nic: enp9s0f1

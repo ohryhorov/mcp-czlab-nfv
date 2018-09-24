@@ -4,6 +4,7 @@ classes:
 - system.linux.system.repo.mcp.openstack
 - system.linux.system.repo.saltstack.xenial
 - system.linux.system.repo.mcp.contrail
+- system.linux.system.repo.glusterfs
 - system.memcached.server.single
 - system.ceilometer.client
 - system.ceilometer.client.neutron
@@ -38,16 +39,27 @@ parameters:
     cluster_node03_address: ${_param:openstack_control_node03_address}
     nova_vncproxy_url: https://${_param:cluster_public_host}:6080
   nova:
+    upgrade:
+      old_release: ocata
+      new_release: pike
+      upgrade_enabled: true
     controller:
       upgrade:
         upgrade_enabled: true
         old_release: ocata
         new_release: pike
   neutron:
+    upgrade:
+      old_release: ocata
+      new_release: pike
     server:
       backend:
         qos: ${_param:neutron_enable_qos}
         tenant_vlan_range: "${_param:neutron_tenant_vlan_range}"
+  glance:
+    upgrade:
+      old_release: ocata
+      new_release: pike
   linux:
     network:
       interface:

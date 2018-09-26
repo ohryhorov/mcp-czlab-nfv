@@ -1,6 +1,7 @@
 
 classes:
 - system.linux.system.single
+- system.linux.system.repo.mcp.apt_mirantis.saltstack
 - system.openssh.server.team.oscore_devops
 - system.openssh.server.team.lab
 - cluster.sriov-neutron.openstack

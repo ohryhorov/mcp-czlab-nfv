@@ -15,7 +15,6 @@ classes:
 - system.glance.control.cluster
 - system.nova.control.cluster
 - system.cinder.control.cluster
-- system.cinder.volume.single
 - system.heat.server.cluster
 - system.haproxy.proxy.listen.openstack.nova-placement
 - system.haproxy.proxy.listen.openstack.glare
@@ -38,28 +37,21 @@ parameters:
     cluster_node03_hostname: ${_param:openstack_control_node03_hostname}
     cluster_node03_address: ${_param:openstack_control_node03_address}
     nova_vncproxy_url: https://${_param:cluster_public_host}:6080
-  nova:
-    upgrade:
-      old_release: ocata
-      new_release: pike
-      upgrade_enabled: true
-    controller:
-      upgrade:
-        upgrade_enabled: true
-        old_release: ocata
-        new_release: pike
+#  nova:
+#    upgrade:
+#      old_release: ocata
+#      new_release: pike
+#      upgrade_enabled: true
   neutron:
-    upgrade:
-      old_release: ocata
-      new_release: pike
     server:
       backend:
         qos: ${_param:neutron_enable_qos}
         tenant_vlan_range: "${_param:neutron_tenant_vlan_range}"
-  glance:
-    upgrade:
-      old_release: ocata
-      new_release: pike
+#  glance:
+#    upgrade:
+#      old_release: ocata
+#      new_release: pike
+#      upgrade_enabled: true
   linux:
     network:
       interface:

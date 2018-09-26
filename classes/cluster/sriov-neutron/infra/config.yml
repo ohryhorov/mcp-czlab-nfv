@@ -35,14 +35,17 @@ parameters:
           params:
             keepalived_vip_priority: 101
             linux_system_codename: xenial
+            glusterfs_node_role: primary
         infra_kvm_node02:
           params:
             keepalived_vip_priority: 102
             linux_system_codename: xenial
+            glusterfs_node_role: secondary
         infra_kvm_node03:
           params:
             keepalived_vip_priority: 103
             linux_system_codename: xenial
+            glusterfs_node_role: secondary
         openstack_control_node01:
           classes:
           - cluster.${_param:cluster_name}.openstack.control_init

@@ -4,6 +4,7 @@ classes:
 - system.linux.system.repo.mcp.extra
 - system.nova.compute.cluster
 - system.neutron.compute.cluster
+- system.cinder.volume.single
 - system.ceilometer.agent.cluster
 - cluster.sriov-neutron.infra
 parameters:
@@ -26,10 +27,10 @@ parameters:
   nova:
     force_config_drive: False
 
-    upgrade:
-      upgrade_enabled: true
-      old_release: ocata
-      new_release: pike
+#    upgrade:
+#      upgrade_enabled: true
+#      old_release: ocata
+#      new_release: pike
 
   neutron:
     compute:
@@ -111,3 +112,22 @@ parameters:
           type: ovs_bridge
           use_interfaces:
           - ${_param:primary_second_nic}
+    storage:
+      loopback:
+        loop1:
+          enabled: true
+          file: /srv/disk0
+          size: 20G
+      lvm:
+        cinder-vg:
+          enabled: true
+          name: cinder-volumes
+          devices: [ "/dev/loop1" ]
+  cinder:
+    volume:
+      default_volume_type: lvm-driver
+      backend:
+        lvm-driver:
+          engine: lvm
+          type_name: lvm-driver
+          volume_group: cinder-volumes

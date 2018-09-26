@@ -16,10 +16,10 @@ parameters:
     primary_second_nic: ens3
     bridge_tenant_nic: ens4
   neutron:
-    upgrade:
-      old_release: ocata
-      new_release: pike
-      upgrade_enabled: true
+#    upgrade:
+#      old_release: ocata
+#      new_release: pike
+#      upgrade_enabled: true
     gateway:
       backend:
         qos: ${_param:neutron_enable_qos}

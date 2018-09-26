@@ -143,6 +143,7 @@ parameters:
     openstack_gateway_node02_hostname: gtw02
     openstack_gateway_node03_hostname: gtw03
     apt_mk_version: testing
+    keystone_service_protocol: http
     
     # Billing
     #keystone_billometer_password: vryk2sI8iL6fXbji

@@ -143,6 +143,7 @@ parameters:
           params:
             salt_master_host: ${_param:reclass_config_master}
             linux_system_codename: xenial
+            tenant_vlan_nic: enp9s0f1
             # sriov_nic01_device_name: eth7
             # sriov_nic01_numvfs: 7
             # sriov_nic01_physical_network: physnet3

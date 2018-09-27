@@ -20,13 +20,13 @@ parameters:
     nova_vncproxy_url: https://${_param:cluster_public_host}:6080
     primary_first_nic: enp9s0f0
     primary_second_nic: ens3f0
+    tenant_vlan_nic: ${_param:primary_second_nic}
     sriov_nic01_device_name: ens3f1
     sriov_nic01_numvfs: 10
     sriov_nic01_physical_network: physnet2
 
   nova:
     force_config_drive: False
-
 #    upgrade:
 #      upgrade_enabled: true
 #      old_release: ocata
@@ -41,12 +41,10 @@ parameters:
           sriov_nic01:
             devname: ${_param:sriov_nic01_device_name}
             physical_network: ${_param:sriov_nic01_physical_network}
-
   linux:
     system:
       kernel:
         sriov: False
-
     network:
       bridge: openvswitch
       interface:
@@ -64,9 +62,8 @@ parameters:
         eth2:
           mtu: 9000
           enabled: true
-#          type: eth
           proto: manual
-          name: ${_param:primary_second_nic}
+          name: ${_param:tenant_vlan_nic}
           ovs_port_type: OVSPort
           type: ovs_port
           ovs_bridge: br-prv
